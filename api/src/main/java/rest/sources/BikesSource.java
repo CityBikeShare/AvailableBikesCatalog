@@ -2,15 +2,19 @@ package rest.sources;
 
 import beans.BikesBean;
 import core.Bikes;
+import core.Users;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -97,7 +101,51 @@ public class BikesSource {
         return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
     }
 
+    @Operation(
+            description = "Publish bike ad",
+            tags = "bike",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Publish successful",
+                            content = @Content(schema = @Schema(implementation = Users.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Publish failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
+    @PUT
+    @Path("insertNew")
+    public Response publishBikeAd(@RequestBody Bikes bike) {
+        bike = bikesBean.insertNewBike(bike);
+        return Response.ok(bike).build();
+    }
 
+    @Operation(
+            summary = "Delete bike ad",
+            description = "Delete bike by id",
+            tags = "bike",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully removed bike ad"
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Removal of bike ad failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )}
+    )
+    @Path("/bike/{id}")
+    @DELETE
+    public Response deleteBike(@PathParam("id") int bikeId) {
+        boolean status = bikesBean.deleteBike(bikeId);
 
+        return status? Response.status(Response.Status.OK).build():
+                Response.status(Response.Status.BAD_REQUEST).build();
+    }
 
 }
