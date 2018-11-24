@@ -144,7 +144,7 @@ public class BikesSource {
     public Response deleteBike(@PathParam("id") int bikeId) {
         boolean status = bikesBean.deleteBike(bikeId);
 
-        return status? Response.status(Response.Status.OK).build():
+        return status ? Response.status(Response.Status.OK).build() :
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
 
