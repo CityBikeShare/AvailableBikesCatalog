@@ -16,7 +16,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
 
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
@@ -46,9 +45,9 @@ public class InfoSource {
                 .add("clani", Json.createArrayBuilder().add("sk5429"))
                 .add("opis_projekta", "Moj projekt implementira aplikacijo za deljenje koles.")
                 .add("mikrostoritve", Json.createArrayBuilder()
-                                        .add("/sources/bikes")
-                                        .add("/sources/bikerent")
-                                        .add("/sources/users"))
+                                        .add("http://159.122.175.182:30000/sources/bikes")
+                                        .add("http://159.122.175.182:30001/sources/bikerent")
+                                        .add("http://159.122.175.182:30002/sources/users"))
                 .add("github", Json.createArrayBuilder()
                                         .add("https://github.com/CityBikeShare/BikeRentService")
                                         .add("https://github.com/CityBikeShare/BikeCatalogService")

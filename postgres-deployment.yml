@@ -1,0 +1,37 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: postgres-bikecatalog
+spec:
+  selector:
+    app: postgres-bikecatalog
+  ports:
+  - protocol: "TCP"
+    port: 5432
+    targetPort: 5432
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-bikecatalog-deployment
+  labels:
+    app: postgres-bikecatalog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-bikecatalog
+  template:
+    metadata:
+      labels:
+        app: postgres-bikecatalog
+    spec:
+      containers:
+      - name: postgres-bikecatalog
+        image: postgres
+        ports:
+        - containerPort: 5432
+        env:
+          - name: POSTGRES_PASSWORD
+            value: admin
