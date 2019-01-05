@@ -186,7 +186,7 @@ public class BikesSource {
                             content = @Content(schema = @Schema(implementation = Error.class))
                     )}
     )
-    @Path("/delete/{id}")
+    @Path("delete/{id}")
     @DELETE
     public Response deleteBike(@PathParam("id") int bikeId) {
         boolean status = bikesBean.deleteBike(bikeId);
