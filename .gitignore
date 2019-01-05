@@ -39,6 +39,17 @@ hs_err_pid*
 # IntelliJ
 /out/
 
+### Maven template
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
@@ -49,3 +60,5 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
+
+ObjectStore
