@@ -12,7 +12,8 @@ import java.io.Serializable;
 @Entity(name = "Bikes")
 @NamedQueries({
         @NamedQuery(name = "Bikes.getAll", query = "SELECT b from Bikes b"),
-        @NamedQuery(name = "Bikes.getByRegion", query = "SELECT b FROM Bikes b INNER JOIN Users u ON u.user_id=b.user_id WHERE u.region = :region")
+        //@NamedQuery(name = "Bikes.getByRegion", query = "SELECT b FROM Bikes b INNER JOIN Users u ON u.user_id=b.user_id WHERE u.region = :region"),
+        @NamedQuery(name = "Bikes.getByUserId", query = "SELECT b FROM Bikes b WHERE b.user_id = :userId")
 })
 public class Bikes implements Serializable {
     @Id
@@ -31,6 +32,15 @@ public class Bikes implements Serializable {
 
     public void setBike_id(Integer bike_id) {
         this.bike_id = bike_id;
+    }
+
+    @ManyToOne
+    public Integer getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getType() {
@@ -73,12 +83,5 @@ public class Bikes implements Serializable {
         isAvailable = available;
     }
 
-    @ManyToOne
-    public Integer getUser_id() {
-        return user_id;
-    }
 
-    public void setUser_id(Integer user_id) {
-        this.user_id = user_id;
-    }
 }

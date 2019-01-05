@@ -16,6 +16,8 @@
         <kumuluzee-openapi.version>1.0.0</kumuluzee-openapi.version>
         <pgsql.version>42.2.5</pgsql.version>
         <jackson-annotations.version>2.9.7</jackson-annotations.version>
+        <kumuluzee-rest.version>1.1.0</kumuluzee-rest.version>
+        <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
 
         <api.version>1.0-SNAPSHOT</api.version>
         <entities.version>1.0-SNAPSHOT</entities.version>
@@ -81,6 +83,17 @@
                 <artifactId>jackson-annotations</artifactId>
                 <version>${jackson-annotations.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.rest</groupId>
+                <artifactId>kumuluzee-rest-core</artifactId>
+                <version>${kumuluzee-rest.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.discovery</groupId>
+                <artifactId>kumuluzee-discovery-consul</artifactId>
+                <version>${kumuluzee-discovery.version}</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>si.fri.citybike</groupId>

@@ -1,7 +1,6 @@
-package beans;
+package beans.core;
 
 import core.Bikes;
-import core.Users;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -27,9 +26,20 @@ public class BikesBean {
         return entityManager.find(Bikes.class, bikeId);
     }
 
-    public List<Bikes> getBikesByRegion(String region) {
-        TypedQuery<Bikes> query = entityManager.createNamedQuery("Bikes.getByRegion", Bikes.class);
-        query.setParameter("region", region);
+//    public List<Bikes> getBikesByRegion(String region) {
+//        TypedQuery<Bikes> query = entityManager.createNamedQuery("Bikes.getByRegion", Bikes.class);
+//        query.setParameter("region", region);
+//
+//        try {
+//            return query.getResultList();
+//        } catch (NoResultException | NonUniqueResultException e) {
+//            return null;
+//        }
+//    }
+
+    public List<Bikes> getBikesByUserId(int userId) {
+        TypedQuery<Bikes> query = entityManager.createNamedQuery("Bikes.getByUserId", Bikes.class);
+        query.setParameter("userId", userId);
 
         try {
             return query.getResultList();
@@ -42,6 +52,18 @@ public class BikesBean {
     public Bikes insertNewBike(Bikes bike) {
         entityManager.persist(bike);
         entityManager.flush();
+        return bike;
+    }
+
+    @Transactional
+    public Bikes updateBike(int bikeId, Bikes bike){
+        try {
+            Bikes tempBike = entityManager.find(Bikes.class, bikeId);
+            bike.setBike_id(tempBike.getBike_id());
+            bike = entityManager.merge(bike);
+        } catch(Exception e) {
+            return null;
+        }
         return bike;
     }
 

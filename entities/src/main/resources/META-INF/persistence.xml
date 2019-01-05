@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
     <persistence-unit name="cityBikeShare-jpa" transaction-type="JTA">
-        <jta-data-source>jdbc/cityBikeShareDS</jta-data-source>
+        <jta-data-source>jdbc/bikecatalogservice</jta-data-source>
 
         <class>core.Bikes</class>
-        <class>core.Users</class>
 
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>

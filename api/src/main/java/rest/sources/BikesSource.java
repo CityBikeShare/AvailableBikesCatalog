@@ -1,8 +1,7 @@
 package rest.sources;
 
-import beans.BikesBean;
+import beans.core.BikesBean;
 import core.Bikes;
-import core.Users;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -29,6 +28,7 @@ import java.util.List;
 public class BikesSource {
     @Inject
     private BikesBean bikesBean;
+
 
     @Operation(
             description = "Get all bikes",
@@ -78,13 +78,37 @@ public class BikesSource {
     }
 
 
+//    @Operation(
+//            description = "Get bikes by region",
+//            tags = "bike",
+//            responses = {
+//                    @ApiResponse(
+//                            responseCode = "200",
+//                            description = "Bike by region",
+//                            content = @Content(schema = @Schema(implementation = Bikes.class))
+//                    ),
+//                    @ApiResponse(
+//                            responseCode = "404",
+//                            description = "Bike with this region does not exist",
+//                            content = @Content(schema = @Schema(implementation = Error.class))
+//                    )
+//            }
+//    )
+//    @Path("{region}")
+//    @GET
+//    public Response getBikesByRegion(@PathParam("region") String region) {
+//        List<Bikes> bike = bikesBean.getBikesByRegion(region);
+//        return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
+//    }
+
+
     @Operation(
-            description = "Get bikes by region",
+            description = "Get bikes by user",
             tags = "bike",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Bike by region",
+                            description = "Bike by user",
                             content = @Content(schema = @Schema(implementation = Bikes.class))
                     ),
                     @ApiResponse(
@@ -94,10 +118,10 @@ public class BikesSource {
                     )
             }
     )
-    @Path("{region}")
+    @Path("user/{id}")
     @GET
-    public Response getBikesByRegion(@PathParam("region") String region) {
-        List<Bikes> bike = bikesBean.getBikesByRegion(region);
+    public Response getBikesByUserId(@PathParam("id") int userId) {
+        List<Bikes> bike = bikesBean.getBikesByUserId(userId);
         return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
     }
 
@@ -108,7 +132,7 @@ public class BikesSource {
                     @ApiResponse(
                             responseCode = "200",
                             description = "Publish successful",
-                            content = @Content(schema = @Schema(implementation = Users.class))
+                            content = @Content(schema = @Schema(implementation = Bikes.class))
                     ),
                     @ApiResponse(
                             responseCode = "400",
@@ -119,8 +143,31 @@ public class BikesSource {
     )
     @PUT
     @Path("insertNew")
-    public Response publishBikeAd(@RequestBody Bikes bike) {
+    public Response insertBike(@RequestBody Bikes bike) {
         bike = bikesBean.insertNewBike(bike);
+        return Response.ok(bike).build();
+    }
+
+    @Operation(
+            description = "Update bike",
+            tags = "bike",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Update successful",
+                            content = @Content(schema = @Schema(implementation = Bikes.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Update failed",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
+    @PUT
+    @Path("update/{id}")
+    public Response updateBike(@PathParam("id") int id, @RequestBody Bikes bike) {
+        bike = bikesBean.updateBike(id, bike);
         return Response.ok(bike).build();
     }
 
@@ -139,7 +186,7 @@ public class BikesSource {
                             content = @Content(schema = @Schema(implementation = Error.class))
                     )}
     )
-    @Path("/bike/{id}")
+    @Path("/delete/{id}")
     @DELETE
     public Response deleteBike(@PathParam("id") int bikeId) {
         boolean status = bikesBean.deleteBike(bikeId);

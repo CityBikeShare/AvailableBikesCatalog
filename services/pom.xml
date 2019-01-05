@@ -21,6 +21,14 @@
             <artifactId>kumuluzee-jta-narayana</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.discovery</groupId>
+            <artifactId>kumuluzee-discovery-consul</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-jax-rs-jersey</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.citybike</groupId>
             <artifactId>entities</artifactId>
         </dependency>
