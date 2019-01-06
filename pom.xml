@@ -19,6 +19,7 @@
         <kumuluzee-rest.version>1.1.0</kumuluzee-rest.version>
         <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
         <kumuluzee-health.version>1.0.1</kumuluzee-health.version>
+        <kumuluzee-metrics.version>1.1.1</kumuluzee-metrics.version>
 
         <api.version>1.0-SNAPSHOT</api.version>
         <entities.version>1.0-SNAPSHOT</entities.version>
@@ -99,7 +100,11 @@
                 <artifactId>kumuluzee-health</artifactId>
                 <version>${kumuluzee-health.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>com.kumuluz.ee.metrics</groupId>
+                <artifactId>kumuluzee-metrics-core</artifactId>
+                <version>${kumuluzee-metrics.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>si.fri.citybike</groupId>

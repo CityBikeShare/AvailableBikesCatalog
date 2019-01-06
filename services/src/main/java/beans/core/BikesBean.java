@@ -2,6 +2,7 @@ package beans.core;
 
 import core.Bikes;
 import external.Users;
+import org.eclipse.microprofile.metrics.annotation.Metered;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -20,15 +21,18 @@ public class BikesBean {
     @PersistenceContext(unitName = "cityBikeShare-jpa")
     private EntityManager entityManager;
 
+    @Metered(name = "getBikes")     // Measures how many times this method is called
     public List<Bikes> getBikes() {
         TypedQuery<Bikes> query = entityManager.createNamedQuery("Bikes.getAll", Bikes.class);
         return query.getResultList();
     }
 
+    @Metered(name = "getBikeById")
     public Bikes getBikeById(int bikeId) {
         return entityManager.find(Bikes.class, bikeId);
     }
 
+    @Metered(name = "getBikesByRegion")
     public List<Bikes> getBikesByRegion(String region, List<Users> usersByRegion) {
         if (usersByRegion == null) {
             return null;
@@ -52,6 +56,7 @@ public class BikesBean {
         return bikesInRegion;
     }
 
+    @Metered(name = "getBikesByUserId")
     public List<Bikes> getBikesByUserId(int userId) {
         TypedQuery<Bikes> query = entityManager.createNamedQuery("Bikes.getByUserId", Bikes.class);
         query.setParameter("userId", userId);
@@ -63,6 +68,7 @@ public class BikesBean {
         }
     }
 
+    @Metered(name = "insertNewBike")
     @Transactional
     public Bikes insertNewBike(Bikes bike) {
         entityManager.persist(bike);
@@ -70,6 +76,7 @@ public class BikesBean {
         return bike;
     }
 
+    @Metered(name = "updateBike")
     @Transactional
     public Bikes updateBike(int bikeId, Bikes bike) {
         try {
@@ -82,6 +89,7 @@ public class BikesBean {
         return bike;
     }
 
+    @Metered(name = "deleteBike")
     @Transactional
     public boolean deleteBike(int bikeId) {
         try {

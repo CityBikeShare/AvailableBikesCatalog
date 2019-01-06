@@ -28,3 +28,10 @@ kumuluzee:
       http-health-check:
       - connection-url: https://github.com/CityBikeShare/BikeCatalogService
 #      - connection-url: https://nonvalidurl.com
+  metrics:
+    web-instrumentation:
+    - name: metrics-endpoint
+      url-pattern: /sources/*
+      status-codes: "200, 400, 404, 500"
+    servlet:
+      enabled: true
