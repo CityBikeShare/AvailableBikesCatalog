@@ -1,5 +1,7 @@
 ### Bike Catalog Service
 
+[![Build Status](https://travis-ci.org/CityBikeShare/BikeCatalogService.svg?branch=master)](https://travis-ci.org/CityBikeShare/BikeCatalogService)
+
 - Service allows a user to publish, update or remove a bike for rent.
 - Service can also: 
     - show available bikes,
