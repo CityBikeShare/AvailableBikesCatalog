@@ -6,8 +6,6 @@ import external.Users;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.client.WebTarget;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,6 @@ public class UsersBean {
     }
 
     public Users getUserById(int id) {
-        System.out.println("_____________________\t" + usersWebTarget.isPresent());
         if (usersWebTarget.isPresent()) {
             WebTarget t = usersWebTarget.get();
             return t.path("sources/users/" + id).request().get(Users.class);

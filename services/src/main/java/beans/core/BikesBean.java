@@ -39,6 +39,7 @@ public class BikesBean {
         for (int i = 0; i < allBikes.size(); i++) {
             int userId = allBikes.get(i).getUser_id();
             for (int j = 0; j < usersByRegion.size(); j++) {
+//                int userIdU = usersByRegion.get(j).getUser_id();
                 Object o = usersByRegion.get(j);
                 LinkedHashMap<Object, Object> linkedHashMap = (LinkedHashMap<Object, Object>) o;
                 int userIdU = (int) linkedHashMap.get("user_id");
