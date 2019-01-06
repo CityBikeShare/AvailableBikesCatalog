@@ -12,3 +12,11 @@ kumuluzee:
     username: postgres
     password: admin
     max-pool-size: 20
+
+  discovery:
+    consul:
+      agent: http://localhost:8500
+
+  config:
+    consul:
+      agent: http://localhost:8500

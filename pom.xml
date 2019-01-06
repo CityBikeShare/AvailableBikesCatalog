@@ -18,6 +18,7 @@
         <jackson-annotations.version>2.9.7</jackson-annotations.version>
         <kumuluzee-rest.version>1.1.0</kumuluzee-rest.version>
         <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
+        <kumuluzee-health.version>1.0.1</kumuluzee-health.version>
 
         <api.version>1.0-SNAPSHOT</api.version>
         <entities.version>1.0-SNAPSHOT</entities.version>
@@ -92,6 +93,11 @@
                 <groupId>com.kumuluz.ee.discovery</groupId>
                 <artifactId>kumuluzee-discovery-consul</artifactId>
                 <version>${kumuluzee-discovery.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.health</groupId>
+                <artifactId>kumuluzee-health</artifactId>
+                <version>${kumuluzee-health.version}</version>
             </dependency>
 
 

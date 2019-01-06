@@ -1,6 +1,7 @@
 package rest.sources;
 
 import beans.core.BikesBean;
+import beans.external.UsersBean;
 import core.Bikes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -29,6 +30,8 @@ public class BikesSource {
     @Inject
     private BikesBean bikesBean;
 
+    @Inject
+    private UsersBean usersBean;
 
     @Operation(
             description = "Get all bikes",
@@ -78,29 +81,28 @@ public class BikesSource {
     }
 
 
-//    @Operation(
-//            description = "Get bikes by region",
-//            tags = "bike",
-//            responses = {
-//                    @ApiResponse(
-//                            responseCode = "200",
-//                            description = "Bike by region",
-//                            content = @Content(schema = @Schema(implementation = Bikes.class))
-//                    ),
-//                    @ApiResponse(
-//                            responseCode = "404",
-//                            description = "Bike with this region does not exist",
-//                            content = @Content(schema = @Schema(implementation = Error.class))
-//                    )
-//            }
-//    )
-//    @Path("{region}")
-//    @GET
-//    public Response getBikesByRegion(@PathParam("region") String region) {
-//        List<Bikes> bike = bikesBean.getBikesByRegion(region);
-//        return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
-//    }
-
+    @Operation(
+            description = "Get bikes by region",
+            tags = "bike",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Bike by region",
+                            content = @Content(schema = @Schema(implementation = Bikes.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "404",
+                            description = "Bike with this region does not exist",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
+    @Path("region/{region}")
+    @GET
+    public Response getBikesByRegion(@PathParam("region") String region) {
+        List<Bikes> bike = bikesBean.getBikesByRegion(region, usersBean.getUsersByRegion(region));
+        return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
+    }
 
     @Operation(
             description = "Get bikes by user",
