@@ -46,4 +46,10 @@ spec:
             value: postgres
           - name: KUMULUZEE_DATASOURCES0_PASSWORD
             value: admin
-        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: server
+          initialDelaySeconds: 20
+          periodSeconds: 3
+
