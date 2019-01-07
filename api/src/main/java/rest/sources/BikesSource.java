@@ -200,9 +200,26 @@ public class BikesSource {
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
 
+    @Operation(
+            description = "Convert price currency",
+            tags = "bike",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Request successful",
+                            content = @Content(schema = @Schema(implementation = double.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Request failed! Check if the bikeId and currency are valid.",
+                            content = @Content(schema = @Schema(implementation = Error.class))
+                    )
+            }
+    )
     @Path("convert")
     @GET
     public Response convertPrice(@QueryParam("bikeid") int bikeId, @QueryParam("currency") String currency) {
-        return Response.ok(bikesBean.convert(bikeId, currency)).build();
+        double status = bikesBean.convert(bikeId, currency);
+        return status != Double.MIN_VALUE ? Response.ok(status).build() : Response.status(Response.Status.BAD_REQUEST).build();
     }
 }

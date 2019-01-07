@@ -37,6 +37,10 @@
             <artifactId>kumuluzee-metrics-core</artifactId>
         </dependency>
         <dependency>
+        <groupId>com.mashape.unirest</groupId>
+        <artifactId>unirest-java</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.citybike</groupId>
             <artifactId>entities</artifactId>
         </dependency>

@@ -1,5 +1,9 @@
 package beans.core;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.exceptions.UnirestException;
 import core.Bikes;
 import external.Users;
 import org.eclipse.microprofile.metrics.annotation.Metered;
@@ -14,9 +18,13 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class BikesBean {
+
+    private Logger log = Logger.getLogger(BikesBean.class.getName());
 
     @PersistenceContext(unitName = "cityBikeShare-jpa")
     private EntityManager entityManager;
@@ -100,4 +108,31 @@ public class BikesBean {
         }
         return true;
     }
+
+    @Metered(name = "convert")
+    @Transactional
+    public double convert(int bikeId, String currency) {
+        double price = getBikeById(bikeId).getPrice();
+
+        try {
+            HttpResponse<JsonNode> response = Unirest.post("https://community-neutrino-currency-conversion.p.rapidapi.com/convert")
+                    .header("X-RapidAPI-Key", "5d6690d88bmsh3a9f8d8538d0bedp1768f4jsn63a8da0306ad")
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .field("from-type", "EUR")
+                    .field("to-type", currency)
+                    .field("from-value", price)
+                    .asJson();
+
+            String result = response.getBody().getObject().get("result").toString();
+            System.out.println(result);
+            if(result == null || result.isEmpty()){
+                throw new UnirestException("Invalid input data.");
+            }
+            return Double.parseDouble(result);
+        } catch (UnirestException e) {
+            log.log(Level.SEVERE, "Request failed! Check if the bikeId and currency are valid.", e);
+            return Double.MIN_VALUE;
+        }
+    }
+
 }
