@@ -20,6 +20,7 @@
         <kumuluzee-discovery.version>1.1.0</kumuluzee-discovery.version>
         <kumuluzee-health.version>1.0.1</kumuluzee-health.version>
         <kumuluzee-metrics.version>1.1.1</kumuluzee-metrics.version>
+        <kumuluzee-logs.version>1.3.0</kumuluzee-logs.version>
 
         <api.version>1.0-SNAPSHOT</api.version>
         <entities.version>1.0-SNAPSHOT</entities.version>
@@ -105,6 +106,17 @@
                 <artifactId>kumuluzee-metrics-core</artifactId>
                 <version>${kumuluzee-metrics.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.kumuluz.ee.logs</groupId>
+                <artifactId>kumuluzee-logs-log4j2</artifactId>
+                <version>${kumuluzee-logs.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mashape.unirest</groupId>
+                <artifactId>unirest-java</artifactId>
+                <version>1.4.9</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>si.fri.citybike</groupId>

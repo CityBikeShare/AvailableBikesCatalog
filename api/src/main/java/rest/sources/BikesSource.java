@@ -2,6 +2,7 @@ package rest.sources;
 
 import beans.core.BikesBean;
 import beans.external.UsersBean;
+import com.kumuluz.ee.logs.cdi.Log;
 import core.Bikes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -18,6 +19,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -26,6 +28,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 @Path("bikes")
 @ApplicationScoped
+@Log
 public class BikesSource {
     @Inject
     private BikesBean bikesBean;
@@ -197,4 +200,9 @@ public class BikesSource {
                 Response.status(Response.Status.BAD_REQUEST).build();
     }
 
+    @Path("convert")
+    @GET
+    public Response convertPrice(@QueryParam("bikeid") int bikeId, @QueryParam("currency") String currency) {
+        return Response.ok(bikesBean.convert(bikeId, currency)).build();
+    }
 }
