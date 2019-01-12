@@ -41,9 +41,9 @@ public class BikesBean {
     }
 
     @Metered(name = "getBikesByRegion")
-    public List<Bikes> getBikesByRegion(String region, List<Users> usersByRegion) {
+    public List<Bikes> getBikesByRegion(List<Users> usersByRegion) {
         if (usersByRegion == null) {
-            return null;
+            return new ArrayList<>();
         }
 
         List<Bikes> allBikes = getBikes();
@@ -51,10 +51,7 @@ public class BikesBean {
         for (int i = 0; i < allBikes.size(); i++) {
             int userId = allBikes.get(i).getUser_id();
             for (int j = 0; j < usersByRegion.size(); j++) {
-//                int userIdU = usersByRegion.get(j).getUser_id();
-                Object o = usersByRegion.get(j);
-                LinkedHashMap<Object, Object> linkedHashMap = (LinkedHashMap<Object, Object>) o;
-                int userIdU = (int) linkedHashMap.get("user_id");
+                int userIdU = usersByRegion.get(j).getUser_id();
                 if (userIdU == userId) {
                     bikesInRegion.add(allBikes.get(i));
                     break;
@@ -72,7 +69,7 @@ public class BikesBean {
         try {
             return query.getResultList();
         } catch (NoResultException | NonUniqueResultException e) {
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -124,13 +121,12 @@ public class BikesBean {
                     .asJson();
 
             String result = response.getBody().getObject().get("result").toString();
-            System.out.println(result);
             if(result == null || result.isEmpty()){
                 throw new UnirestException("Invalid input data.");
             }
             return Double.parseDouble(result);
         } catch (UnirestException e) {
-            log.log(Level.SEVERE, "Request failed! Check if the bikeId and currency are valid.", e);
+            log.log(Level.SEVERE, "Request failed! Check if the bikeId and currency are valid.");
             return Double.MIN_VALUE;
         }
     }

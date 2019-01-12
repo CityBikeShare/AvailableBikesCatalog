@@ -103,7 +103,7 @@ public class BikesSource {
     @Path("region/{region}")
     @GET
     public Response getBikesByRegion(@PathParam("region") String region) {
-        List<Bikes> bike = bikesBean.getBikesByRegion(region, usersBean.getUsersByRegion(region));
+        List<Bikes> bike = bikesBean.getBikesByRegion(usersBean.getUsersByRegion(region));
         return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
     }
 

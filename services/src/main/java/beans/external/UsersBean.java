@@ -6,6 +6,7 @@ import external.Users;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,8 @@ public class UsersBean {
     public List<Users> getUsersByRegion(String region) {
         if (usersWebTarget.isPresent()) {
             WebTarget t = usersWebTarget.get();
-            return t.path("sources/users/region/" + region).request().get(List.class);
+            return t.path("sources/users/region/" + region).request().get(new GenericType<List<Users>>() {
+            });
         }
         return null;
     }
