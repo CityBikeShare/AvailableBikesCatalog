@@ -19,7 +19,8 @@ public class UsersBean {
     public List<Users> getUsers() {
         if (usersWebTarget.isPresent()) {
             WebTarget t = usersWebTarget.get();
-            return t.path("sources/users").request().get(List.class);
+            return t.path("sources/users").request().get(new GenericType<List<Users>>() {
+            });
         }
         return null;
     }

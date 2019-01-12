@@ -14,12 +14,12 @@ kumuluzee:
     max-pool-size: 20
 
   discovery:
-    consul:
-      agent: http://localhost:8500
+    etcd:
+      hosts: http://localhost:2379
 
   config:
-    consul:
-      agent: http://localhost:8500
+    etcd:
+      hosts: http://localhost:2379
 
   health:
     checks:

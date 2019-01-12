@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +42,7 @@ public class BikesBean {
     @Metered(name = "getBikesByRegion")
     public List<Bikes> getBikesByRegion(List<Users> usersByRegion) {
         if (usersByRegion == null) {
-            return new ArrayList<>();
+            return null;
         }
 
         List<Bikes> allBikes = getBikes();
@@ -69,7 +68,7 @@ public class BikesBean {
         try {
             return query.getResultList();
         } catch (NoResultException | NonUniqueResultException e) {
-            return new ArrayList<>();
+            return null;
         }
     }
 
@@ -121,7 +120,7 @@ public class BikesBean {
                     .asJson();
 
             String result = response.getBody().getObject().get("result").toString();
-            if(result == null || result.isEmpty()){
+            if (result == null || result.isEmpty()) {
                 throw new UnirestException("Invalid input data.");
             }
             return Double.parseDouble(result);

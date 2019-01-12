@@ -36,16 +36,21 @@ spec:
           name: server
           protocol: TCP
         env:
-          - name: KUMULUZEE_DISCOVERY_CONSUL_AGENT
-            value: http://consul:8500  
-          - name: KUMULUZEE_CONFIG_CONSUL_AGENT
-            value: http://consul:8500
+          - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+            value: http://etcd:2379
+          - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+            value: http://etcd:2379
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres-bikecatalog:5432/postgres
           - name: KUMULUZEE_DATASOURCES0_USERNAME
             value: postgres
           - name: KUMULUZEE_DATASOURCES0_PASSWORD
             value: admin
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: citybikeshare
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://bikecatalogservice:8082
+
         livenessProbe:
           httpGet:
             path: /health
