@@ -13,7 +13,7 @@ import java.util.Optional;
 @ApplicationScoped
 public class UsersBean {
     @Inject
-    @DiscoverService(value = "userservice", version = "1.0.0", environment = "dev")
+    @DiscoverService(value = "usermanagmentservice", version = "1.0.0", environment = "dev")
     private Optional<WebTarget> usersWebTarget;
 
     public List<Users> getUsers() {
