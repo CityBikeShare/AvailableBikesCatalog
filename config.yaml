@@ -25,8 +25,8 @@ kumuluzee:
     checks:
       data-source-health-check:
         jndi-name: jdbc/bikecatalogservice
-      http-health-check:
-      - connection-url: https://github.com/CityBikeShare/BikeCatalogService
+#      http-health-check:
+#      - connection-url: https://github.com/CityBikeShare/BikeCatalogService
 #      - connection-url: https://nonvalidurl.com
   metrics:
     web-instrumentation:
