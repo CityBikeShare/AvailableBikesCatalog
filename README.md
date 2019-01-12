@@ -13,7 +13,8 @@
         - 159.122.177.235:30000/sources/bikes/bike/{id}           ### Get bike by id
         - 159.122.177.235:30000/sources/bikes/region/{region}     ### Get bikes in given region
         - 159.122.177.235:30000/sources/bikes/user/{id}           ### Get bikes owned by user with given id
-
+        - 159.122.177.235:30000/sources/bikes/convert/            ### Get bike price in other currency [@QueryParam bikeid, currency]
+        
     PUT
         - 159.122.177.235:30000/sources/bikes/insertNew           ### Inserts new bike in the catalog [@RequestBody Bikes]
         - 159.122.177.235:30000/sources/bikes/update/{id}         ### Updated bike with given id to [@RequestBody Bikes]
