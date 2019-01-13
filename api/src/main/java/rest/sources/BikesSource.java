@@ -86,11 +86,8 @@ public class BikesSource {
     @Path("fault-bike/{id}")
     @GET
     public Response getFaultBikeById(@PathParam("id") int id){
-        try {
-            return Response.ok(bikesBean.getBikeByIdFault(id)).build();
-        }catch (Exception e){
-            return Response.status(Response.Status.BAD_REQUEST).build();
-        }
+        Bikes bike = bikesBean.getBikeByIdFault(id);
+        return Response.ok(bike).build();
     }
 
     @Operation(

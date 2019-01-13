@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ApplicationScoped
+@CircuitBreaker(requestVolumeThreshold = 1, delay = 10, delayUnit = ChronoUnit.SECONDS)
 public class BikesBean {
 
     private Logger log = Logger.getLogger(BikesBean.class.getName());
@@ -43,18 +44,20 @@ public class BikesBean {
     }
 
     @Metered(name = "getBikeByIdFault")
-    @CircuitBreaker(requestVolumeThreshold = 1, delay = 10, delayUnit = ChronoUnit.SECONDS)
     @Fallback(fallbackMethod = "getBikeByIdFallback")
-    public Bikes getBikeByIdFault(int id) throws Exception {
+    public Bikes getBikeByIdFault(int id) {
         if (id % 2 == 0){
-            log.severe(">>> Testing fault tolerance");
-            throw new Exception(">>> Testing fault tolerance");
+            //log.severe(">>> Testing fault tolerance");
+            throw new RuntimeException(">>> Testing fault tolerance");
         }
         return getBikeById(id);
     }
 
-    private Bikes getBikeByIdFallback(int id) {
-        return null;
+    public Bikes getBikeByIdFallback(int id) {
+        Bikes bike = new Bikes();
+        bike.setBike_id(id);
+
+        return bike;
     }
 
     @Metered(name = "getBikesByRegion")
