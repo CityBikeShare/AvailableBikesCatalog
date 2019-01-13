@@ -6,6 +6,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import core.Bikes;
 import external.Users;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -15,6 +17,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,6 +40,21 @@ public class BikesBean {
     @Metered(name = "getBikeById")
     public Bikes getBikeById(int bikeId) {
         return entityManager.find(Bikes.class, bikeId);
+    }
+
+    @Metered(name = "getBikeByIdFault")
+    @CircuitBreaker(requestVolumeThreshold = 1, delay = 10, delayUnit = ChronoUnit.SECONDS)
+    @Fallback(fallbackMethod = "getBikeByIdFallback")
+    public Bikes getBikeByIdFault(int id) throws Exception {
+        if (id % 2 == 0){
+            log.severe(">>> Testing fault tolerance");
+            throw new Exception(">>> Testing fault tolerance");
+        }
+        return getBikeById(id);
+    }
+
+    private Bikes getBikeByIdFallback(int id) {
+        return null;
     }
 
     @Metered(name = "getBikesByRegion")

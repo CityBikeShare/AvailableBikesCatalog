@@ -83,6 +83,15 @@ public class BikesSource {
         return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
     }
 
+    @Path("fault-bike/{id}")
+    @GET
+    public Response getFaultBikeById(@PathParam("id") int id){
+        try {
+            return Response.ok(bikesBean.getBikeByIdFault(id)).build();
+        }catch (Exception e){
+            return Response.status(Response.Status.BAD_REQUEST).build();
+        }
+    }
 
     @Operation(
             description = "Get bikes by region",
@@ -106,6 +115,7 @@ public class BikesSource {
         List<Bikes> bike = bikesBean.getBikesByRegion(usersBean.getUsersByRegion(region));
         return bike == null ? Response.status(Response.Status.NOT_FOUND).build() : Response.ok(bike).build();
     }
+
 
     @Operation(
             description = "Get bikes by user",
